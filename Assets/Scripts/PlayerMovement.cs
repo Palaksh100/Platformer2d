@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,9 +9,11 @@ public class PlayerMovement : MonoBehaviour
     private bool Grounded;
     private Vector2 moveInput;
     private Animator animator;
-
+    private bool portalActive=true;
+    private GameObject CurrentPortal;
     void Awake()
     {
+        portalActive=true;
         body=GetComponent<Rigidbody2D>();
         animator=GetComponent<Animator>();
     }
@@ -38,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale=new Vector3(-Mathf.Abs(transform.localScale.x),transform.localScale.y,1f);
         }
         animator.SetBool("Walk",moveInput.x!=0&&Grounded);
-        Debug.Log(body.linearVelocity);
 
     }
     void OnCollisionEnter2D(Collision2D collision){
@@ -46,5 +48,24 @@ public class PlayerMovement : MonoBehaviour
             Grounded=true;
             body.linearVelocityY=0;
         }
+    }
+    void OnTriggerEnter2D(Collider2D other){
+        if(other.gameObject.CompareTag("Portal")){
+            if(portalActive){
+                Debug.Log("G");
+                Transform parent=other.gameObject.transform.parent;
+                foreach(Transform child in parent){
+                    if (child.gameObject!=other.gameObject){
+                        CurrentPortal=child.gameObject;
+                        body.position=CurrentPortal.transform.position;
+                        portalActive=false;
+                    }
+                }
+            }
+        }
+    }
+    void OnTriggerExit2D(Collider2D other){
+        if(CurrentPortal!=null)
+        if(other.gameObject==CurrentPortal) portalActive=true;
     }
 }
