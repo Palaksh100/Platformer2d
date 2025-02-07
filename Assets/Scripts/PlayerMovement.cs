@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale=new Vector3(-Mathf.Abs(transform.localScale.x),transform.localScale.y,1f);
         }
         animator.SetBool("Walk",moveInput.x!=0&&Grounded);
+        Debug.Log(body.linearVelocity);
 
     }
     void OnCollisionEnter2D(Collision2D collision){
