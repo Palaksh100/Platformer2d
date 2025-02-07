@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public Transform player;
+    [SerializeField]private float Speed;
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        
+        transform.position=Vector3.Lerp(transform.position,player.position-Vector3.forward*10,Speed);
     }
 }
