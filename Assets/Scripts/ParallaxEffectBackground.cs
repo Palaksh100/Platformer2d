@@ -1,24 +1,19 @@
-using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.UIElements;
-
 public class ParallaxEffectBackground : MonoBehaviour
 {
     public float Scale;
-    private Transform CameraTransform;
-    [SerializeField]private float BackgroundWidth;
-    private Vector3 start;
-    private float InitialCameraX;
+    public float Speed;
+    public Transform player;
+    [SerializeField] private float BackgroundWidth;
     void Start()
     {
-        CameraTransform=Camera.main.transform;
-        InitialCameraX=CameraTransform.position.x;
-        start=transform.position;
+        SpriteRenderer sr=GetComponent<SpriteRenderer>();
+        BackgroundWidth=sr.bounds.size.x/2;
     }
 
-    void Update()
+    void LateUpdate()
     {
-        transform.position=new Vector3(start.x+(CameraTransform.position.x-InitialCameraX)*Scale,start.y,start.z);
-    
+        float X=(player.position.x*(Scale-1f))%BackgroundWidth+BackgroundWidth/2+player.position.x;
+        transform.position=Vector3.Lerp(transform.position,new Vector3(X,0,0),Speed);
     }
 }
