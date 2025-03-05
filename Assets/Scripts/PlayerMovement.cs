@@ -5,8 +5,9 @@ using System.Collections.Generic;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed,jumpSpeed;
+    public bool InBossRoom=false;
     private Rigidbody2D body;
-    private bool Grounded;
+    [SerializeField]private bool Grounded;
     private Vector2 moveInput;
     private Animator animator;
     private bool portalActive=true;
@@ -39,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
         }
         if(body.linearVelocityX<-0.01f){
             transform.localScale=new Vector3(-Mathf.Abs(transform.localScale.x),transform.localScale.y,1f);
+        }
+        if(body.position.y>25f){
+            InBossRoom=true;
         }
         animator.SetBool("Walk",moveInput.x!=0&&Grounded);
 
