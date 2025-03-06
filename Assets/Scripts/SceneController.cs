@@ -30,4 +30,10 @@ public class SceneController : MonoBehaviour
     {
         LoadScene("Level"+Level.ToString());
     }
+    public void MainMenu(){
+        LoadScene("Main Menu");
+    }
+    public void Complete(){
+        LoadScene("Game Complete");
+    }
 }

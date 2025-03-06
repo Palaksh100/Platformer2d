@@ -67,6 +67,9 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+        else if(other.gameObject.CompareTag("Flag")){
+                SceneController.instance.Complete();
+            }
     }
     void OnTriggerExit2D(Collider2D other){
         if(CurrentPortal!=null)
