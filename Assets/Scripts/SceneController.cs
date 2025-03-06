@@ -23,4 +23,11 @@ public class SceneController : MonoBehaviour
     public void Quit(){
         Application.Quit();
     }
+    public void Play(){
+        LoadScene("Level Menu");
+    }
+    public void StartLevel(int Level)
+    {
+        LoadScene("Level"+Level.ToString());
+    }
 }
