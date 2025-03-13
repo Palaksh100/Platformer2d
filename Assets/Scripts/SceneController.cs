@@ -1,26 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using Unity.VisualScripting;
 
 public class SceneController : MonoBehaviour
 {
     public static SceneController instance;
-    public Animator TransitionAnimator;
+    public Animator FadeAnimator;
+    public Animator SlidingAnimator;
     public float TransitionTime;
     GameObject PauseMenu;
+    
     void Awake()
     {
-        if(instance==null){
-            instance=this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else{
-            Destroy(gameObject);
-        }
+        instance=this;
     }
     public void LoadScene(string name){
-        Time.timeScale=1f;
-        SceneManager.LoadSceneAsync(name);
+        StartCoroutine(SceneTransition(name,FadeAnimator));
     }
     public void Quit(){
         Application.Quit();
@@ -49,5 +46,11 @@ public class SceneController : MonoBehaviour
     public void Resume(){
         PauseMenu.SetActive(false);
         Time.timeScale=1f;
+    }
+    IEnumerator SceneTransition(string name,Animator Transition){
+        Time.timeScale=1f;
+        Transition.SetTrigger("Start");
+        yield return new WaitForSeconds(TransitionTime);
+        SceneManager.LoadSceneAsync(name);   
     }
 }

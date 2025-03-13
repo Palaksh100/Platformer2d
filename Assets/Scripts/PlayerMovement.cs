@@ -56,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.CompareTag("Portal")){
             if(portalActive){
-                Debug.Log("G");
                 Transform parent=other.gameObject.transform.parent;
                 foreach(Transform child in parent){
                     if (child.gameObject!=other.gameObject){
